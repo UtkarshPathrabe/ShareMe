@@ -15,7 +15,7 @@ const Pin = ({ pin }) => {
 
   const navigate = useNavigate();
 
-  const { postedBy, image, _id, destination } = pin;
+  const { postedBy, image, _id, destination, save } = pin;
 
   useEffect(() => {
     const userInfo = getUserDataFromToken();
@@ -25,20 +25,10 @@ const Pin = ({ pin }) => {
     };
   }, []);
 
-  const deletePin = (id) => {
-    client
-      .delete(id)
-      .then(() => {
-        window.location.reload();
-      });
-  };
-
-  let alreadySaved = pin?.save?.filter((item) => item?.postedBy?._id === user?.id);
-
-  alreadySaved = alreadySaved?.length > 0 ? alreadySaved : [];
+  const alreadySaved = !!(save?.filter((item) => item?.postedBy?._id === user?.id)?.length);
 
   const savePin = (id) => {
-    if (alreadySaved?.length === 0) {
+    if (!alreadySaved) {
       setSavingPost(true);
       client
         .patch(id)
@@ -57,6 +47,14 @@ const Pin = ({ pin }) => {
           setSavingPost(false);
         });
     }
+  };
+
+  const deletePin = (id) => {
+    client
+      .delete(id)
+      .then(() => {
+        window.location.reload();
+      });
   };
 
   return (
@@ -86,9 +84,9 @@ const Pin = ({ pin }) => {
                   <MdDownloadForOffline />
                 </a>
               </div>
-              {alreadySaved?.length !== 0 ? (
+              {alreadySaved ? (
                 <button type="button" className="bg-red-500 opacity-70 hover:opacity-100 text-white font-bold px-5 py-1 text-base rounded-3xl hover:shadow-md outline-none">
-                  {pin?.save?.length}  Saved
+                  {save?.length} Saved
                 </button>
               ) : (
                 <button
@@ -99,7 +97,7 @@ const Pin = ({ pin }) => {
                   type="button"
                   className="bg-red-500 opacity-70 hover:opacity-100 text-white font-bold px-5 py-1 text-base rounded-3xl hover:shadow-md outline-none"
                 >
-                  {pin?.save?.length}   {savingPost ? 'Saving' : 'Save'}
+                  {save?.length} {savingPost ? 'Saving' : 'Save'}
                 </button>
               )}
             </div>
@@ -116,31 +114,27 @@ const Pin = ({ pin }) => {
                   {destination?.slice(8, 17)}...
                 </a>
               ) : undefined}
-              {
-           postedBy?._id === user?.id && (
-           <button
-             type="button"
-             onClick={(e) => {
-               e.stopPropagation();
-               deletePin(_id);
-             }}
-             className="bg-white p-2 rounded-full w-8 h-8 flex items-center justify-center text-dark opacity-75 hover:opacity-100 outline-none"
-           >
-             <AiTwotoneDelete />
-           </button>
-           )
-        }
+              { (postedBy?._id === user?.id) ? (
+                <button
+                  type="button"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    deletePin(_id);
+                  }}
+                  className="bg-white p-2 rounded-full w-8 h-8 flex items-center justify-center text-dark opacity-75 hover:opacity-100 outline-none"
+                >
+                  <AiTwotoneDelete />
+                </button>) : null}
             </div>
-          </div>
-        ) : null}
+          </div>) : null}
       </div>
-      <Link to={`/user-profile/${postedBy?._id}`} className="flex gap-2 mt-2 items-center">
+      <Link to={`/user-profile/${postedBy?._id}`} className="flex gap-2 mt-2 ml-2 items-center">
         <img
           className="w-8 h-8 rounded-full object-cover"
           src={postedBy?.image}
           alt="user-profile"
         />
-        <p className="font-semibold capitalize">{postedBy?.userName}</p>
+        <p className="font-base text-sm capitalize">{postedBy?.userName}</p>
       </Link>
     </div>
   );
