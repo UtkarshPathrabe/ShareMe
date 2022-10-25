@@ -80,7 +80,7 @@ const PinDetail = ({ user }) => {
               </a>
             </div>
             <a href={pinDetail?.destination} target="_blank" rel="noreferrer">
-              {pinDetail?.destination}
+              {(pinDetail?.destination?.length > 60) ? `${pinDetail?.destination?.slice(0, 60)}...` : pinDetail?.destination}
             </a>
           </div>
           <div>
