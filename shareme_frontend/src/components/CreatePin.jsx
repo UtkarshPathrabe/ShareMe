@@ -43,7 +43,7 @@ const CreatePin = ({ user }) => {
     return !!(title && about && destination && imageAsset?._id && category);
   }, [about, category, destination, imageAsset?._id, title]);
 
-  const savePin = () => {
+  const createPin = () => {
     if (isFormDataValid) {
       const doc = {
         _type: 'pin',
@@ -170,10 +170,10 @@ const CreatePin = ({ user }) => {
             <div className='flex justify-end items-end mt-5'>
               <button
                 type="button"
-                onClick={savePin}
+                onClick={createPin}
                 className='bg-red-500 text-white font-bold p-2 rounded-full w-28 outline-none cursor-pointer'
               >
-                Save Pin
+                Create Pin
               </button>
             </div>
           </div>
