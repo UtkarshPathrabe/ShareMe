@@ -3,7 +3,7 @@ ShareMe
 
 [Live Website](https://utkarsh-pathrabe-shareme.netlify.app/)  
 
-Full stack Social Media application which lets users share photos. It supports all advanced Social Media features, such as Google Authentication, create, edit, delete and save posts, like and comment on other people's posts, search and filter images and much more. The data is managed using Sanity.
+"ShareMe" stands as a comprehensive full-stack Social Media application tailored for photo sharing. With a robust feature set, it offers a rich user experience. Notable functionalities encompass Google Authentication for secure access. Users can create, edit, delete, and save posts, fostering content personalization. Interaction thrives through features like liking and commenting on fellow users' posts. The app supports effective image exploration through advanced search and filtering options. Crucially, "ShareMe" utilizes Sanity to adeptly manage data, ensuring seamless operations. By amalgamating these attributes, "ShareMe" becomes a versatile platform for social connectivity centered around visual storytelling.  
 
 ![Main Page](./assets/main-page.png)  
 
